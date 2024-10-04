@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>URL Shortener - Neo Brutalism</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
       @import url("https://fonts.googleapis.com/css2?family=Anton&display=swap");
       body {
@@ -15,11 +16,12 @@
       function copyToClipboard() {
         const shortUrlElement = document.getElementById("shortUrl");
         const shortUrl = shortUrlElement.innerText;
+        const copyBtn = document.getElementById("copy-btn");
 
         navigator.clipboard
           .writeText(shortUrl)
           .then(() => {
-            console.log("copied");
+            Swal.fire("URL Copied");
           })
           .catch((err) => {
             console.error("Failed to copy: ", err);
@@ -31,7 +33,7 @@
     <nav class="bg-white py-2 px-6 flex justify-between items-center sticky">
       <a class="text-4xl text-black" href="#">URI</a>
       <a
-        href="https://github.com/Rakhulsr"
+        href="https://github.com/Rakhulsr/URI"
         target="_blank"
         class="bg-black text-white px-4 py-2 text-xl flex items-center rounded-xl"
       >
@@ -74,19 +76,13 @@
           <div class="flex justify-between items-center mt-4">
             <span id="shortUrl" class="text-xl break-all">{{.ShortUrl}}</span>
             <button
+              id="copy-btn"
               class="bg-black text-white px-3 py-1 border-2 border-black rounded-lg"
               onclick="copyToClipboard()"
             >
               Copy
             </button>
           </div>
-          <a
-            href="{{ .ShortUrl }}"
-            target="_blank"
-            class="block text-center bg-black text-white mt-2 p-2 border-2 border-black rounded-xl"
-          >
-            Visit Short URL
-          </a>
         </div>
         {{end}}
       </div>
