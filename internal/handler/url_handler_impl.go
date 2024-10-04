@@ -22,9 +22,14 @@ func NewURLHandlerImpl(storageService service.StorageService) *URLHandlerImpl {
 }
 
 func (h *URLHandlerImpl) ShowForm(c *fiber.Ctx) error {
+	baseURL := os.Getenv("RAILWAY_STATIC_URL")
+	if baseURL == "" {
+		baseURL = os.Getenv("BASE_URL")
+	}
 	shortUrl := c.Query("shortUrl", "")
+	resURL := baseURL + shortUrl
 	responseData := web.ResponseData{
-		ShortUrl: shortUrl,
+		ShortUrl: resURL,
 	}
 
 	return c.Render("form", responseData)
