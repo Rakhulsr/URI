@@ -19,14 +19,14 @@ func NewRedisClient() *RedisClient {
 
 	godotenv.Load()
 
-	residURL := os.Getenv("REDIS_URL")
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 
 	defer cancel()
 
 	client := redis.NewClient(&redis.Options{
-		Addr:     residURL,
-		Password: "",
+		Addr:     fmt.Sprintf("%s:%s", os.Getenv("REDIS_HOST"), os.Getenv("REDIS_PORT")),
+		Username: os.Getenv("REDIS_USERNAME"),
+		Password: os.Getenv("REDIS_PASSWORD"),
 		DB:       0,
 	})
 
