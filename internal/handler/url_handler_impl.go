@@ -54,19 +54,22 @@ func (h *URLHandlerImpl) SaveUrlHandler(c *fiber.Ctx) error {
 		baseURL = os.Getenv("BASE_URL")
 	}
 
-	resURL := strings.Trim(baseURL, "\"") + shortUrl
+	baseURL = strings.Trim(baseURL, "\"")
+	resURL := baseURL + "/" + shortUrl
 
 	responseData := web.ResponseData{
 		OriginalUrl: reqBody.OriginalUrl,
 		ShortUrl:    resURL,
 	}
 
-	return c.Status(fiber.StatusOK).JSON(web.WebResponse{
+	c.Status(fiber.StatusOK).JSON(web.WebResponse{
 		Code:    fiber.StatusOK,
 		Status:  "Success",
 		Message: "URL successfully shortened",
 		Data:    responseData,
 	})
+
+	return c.Redirect("/?shortUrl="+shortUrl, fiber.StatusSeeOther)
 }
 
 func (h *URLHandlerImpl) RetrieveUrlHandler(c *fiber.Ctx) error {
