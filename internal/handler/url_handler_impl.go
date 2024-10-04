@@ -60,7 +60,8 @@ func (h *URLHandlerImpl) SaveUrlHandler(c *fiber.Ctx) error {
 		baseURL = os.Getenv("BASE_URL")
 	}
 
-	baseURL = strings.Trim(baseURL, "/")
+	baseURL = strings.TrimRight(baseURL, "/")
+	shortUrl = strings.TrimLeft(shortUrl, "/")
 	resURL := baseURL + "/" + shortUrl
 
 	responseData := web.ResponseData{
