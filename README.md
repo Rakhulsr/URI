@@ -1,8 +1,8 @@
 # URI (URL Shortener)
 
-# My Project
-
 ![URI Img](assets/URI.png)
+
+**DEMO**:  [HERE](https://clever-youth-production.up.railway.app/)
 
 This is a brief description of my project.
 
@@ -57,7 +57,7 @@ Before running this application, ensure you have installed:
 4. **Migrate the database (If you are using a migration tool, add this step according to the tool you choose).**
 5. **Run the application:**
    ```bash
-    go run main.go
+    go run ./cmd/main.go
    ```
 
 ## Usage
