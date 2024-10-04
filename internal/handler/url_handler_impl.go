@@ -55,13 +55,12 @@ func (h *URLHandlerImpl) SaveUrlHandler(c *fiber.Ctx) error {
 	}
 
 	shortUrl := h.storageService.SaveUrlMap(reqBody.OriginalUrl, reqBody.UserId)
-
 	baseURL := os.Getenv("RAILWAY_STATIC_URL")
 	if baseURL == "" {
 		baseURL = os.Getenv("BASE_URL")
 	}
 
-	baseURL = strings.Trim(baseURL, "\"")
+	baseURL = strings.Trim(baseURL, "/")
 	resURL := baseURL + "/" + shortUrl
 
 	responseData := web.ResponseData{
