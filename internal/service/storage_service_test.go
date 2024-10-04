@@ -11,6 +11,7 @@ import (
 var testStorageService *StorageServiceImpl
 
 func init() {
+
 	redisClient := db.NewRedisClient()
 
 	testStorageService = NewStorageServiceImpl(redisClient, shortener.NewLinkGeneratorImpl())

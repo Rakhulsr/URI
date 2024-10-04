@@ -3,6 +3,8 @@ package handler
 import (
 	"log"
 	"net/url"
+	"os"
+	"strings"
 
 	"github.com/Rakhulsr/go-url-shortener/internal/model/web"
 	"github.com/Rakhulsr/go-url-shortener/internal/service"
@@ -41,8 +43,10 @@ func (h *URLHandlerImpl) SaveUrlHandler(c *fiber.Ctx) error {
 	}
 
 	shortUrl := h.storageService.SaveUrlMap(reqBody.OriginalUrl, reqBody.UserId)
+	baseURL := os.Getenv("BASE_URL")
 
-	resURL := "http://localhost:8080/shorten/" + shortUrl
+	baseURL = strings.Trim(baseURL, "\"")
+	resURL := baseURL + "/" + shortUrl
 
 	responseData := web.ResponseData{
 		OriginalUrl: reqBody.OriginalUrl,
@@ -56,7 +60,7 @@ func (h *URLHandlerImpl) SaveUrlHandler(c *fiber.Ctx) error {
 		Data:    responseData,
 	})
 
-	return c.Render("form", responseData)
+	return c.Redirect("/?shortUrl="+resURL, fiber.StatusSeeOther)
 }
 
 func (h *URLHandlerImpl) RetrieveUrlHandler(c *fiber.Ctx) error {

@@ -15,8 +15,8 @@ func NewRouter(apiHandler handler.URLHandler) *fiber.App {
 
 	app.Get("/", apiHandler.ShowForm)
 
-	app.Post("/shorten", apiHandler.SaveUrlHandler)
-	app.Get("/shorten/:shortUrl", apiHandler.RetrieveUrlHandler)
+	app.Post("/", apiHandler.SaveUrlHandler)
+	app.Get("/:shortUrl", apiHandler.RetrieveUrlHandler)
 
 	return app
 }

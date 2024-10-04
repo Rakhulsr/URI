@@ -4,6 +4,7 @@ import (
 	"log"
 
 	"github.com/Rakhulsr/go-url-shortener/cmd/app"
+
 	"github.com/Rakhulsr/go-url-shortener/internal/db"
 	"github.com/Rakhulsr/go-url-shortener/internal/handler"
 	"github.com/Rakhulsr/go-url-shortener/internal/service"
@@ -11,6 +12,7 @@ import (
 )
 
 func main() {
+
 	redisClient := db.NewRedisClient()
 	linkGen := shortener.NewLinkGeneratorImpl()
 	storageServiceImpl := service.NewStorageServiceImpl(redisClient, linkGen)
