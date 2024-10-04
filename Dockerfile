@@ -13,7 +13,6 @@ RUN CGO_ENABLED=0 GOOS=linux go build -o server ./cmd/main.go
 
 FROM alpine:latest
 
-RUN apk add --no-cache redis
 
 WORKDIR /app
 
