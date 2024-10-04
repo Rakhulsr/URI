@@ -29,16 +29,17 @@ func (h *URLHandlerImpl) ShowForm(c *fiber.Ctx) error {
 		baseURL = os.Getenv("BASE_URL")
 	}
 
-	responseData := web.ResponseData{
-		ShortUrl: shortUrl,
-	}
+	responseData := web.ResponseData{}
 	if shortUrl == "" {
-		return c.Render("form", responseData)
-	} else {
-		responseData.ShortUrl = baseURL + "/" + shortUrl
 		return c.Render("form", responseData)
 	}
 
+	if strings.HasPrefix(shortUrl, "/") {
+		shortUrl = strings.TrimPrefix(shortUrl, "/")
+	}
+
+	responseData.ShortUrl = baseURL + "/" + shortUrl
+	return c.Render("form", responseData)
 }
 
 func (h *URLHandlerImpl) SaveUrlHandler(c *fiber.Ctx) error {
