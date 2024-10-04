@@ -10,8 +10,12 @@ services:
     depends_on:
       - redis
     environment:
-      - REDIS_URL=redis://redis:6379
-      - BASE_URL=http://localhost:8080
+      BASE_URL: ${BASE_URL}
+      REDIS_URL: ${REDIS_URL}
+      REDIS_HOST: ${REDIS_HOST}
+      REDIS_PORT: ${REDIS_PORT}
+      REDIS_USERNAME: ${REDIS_USERNAME}
+      REDIS_PASSWORD: ${REDIS_PASSWORD}
 
   redis:
     image: "redis:latest"
