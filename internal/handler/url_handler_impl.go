@@ -50,7 +50,7 @@ func (h *URLHandlerImpl) SaveUrlHandler(c *fiber.Ctx) error {
 	}
 
 	baseURL = strings.Trim(baseURL, "\"")
-	resURL := baseURL + "/" + shortUrl
+	resURL := baseURL + shortUrl
 
 	responseData := web.ResponseData{
 		OriginalUrl: reqBody.OriginalUrl,
@@ -64,7 +64,7 @@ func (h *URLHandlerImpl) SaveUrlHandler(c *fiber.Ctx) error {
 		Data:    responseData,
 	})
 
-	return c.Redirect("/?shortUrl="+resURL, fiber.StatusSeeOther)
+	return c.Redirect("/?shortUrl="+shortUrl, fiber.StatusSeeOther)
 }
 
 func (h *URLHandlerImpl) RetrieveUrlHandler(c *fiber.Ctx) error {
