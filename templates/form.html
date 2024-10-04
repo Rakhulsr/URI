@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>URL Shortener - Neo Brutalism</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Anton&display=swap");
+      body {
+        font-family: "Anton", sans-serif;
+      }
+    </style>
+    <script>
+      function copyToClipboard() {
+        const shortUrlElement = document.getElementById("shortUrl");
+        const shortUrl = shortUrlElement.innerText;
+
+        navigator.clipboard
+          .writeText(shortUrl)
+          .then(() => {
+            console.log("copied");
+          })
+          .catch((err) => {
+            console.error("Failed to copy: ", err);
+          });
+      }
+    </script>
+  </head>
+  <body class="bg-gray-100 text-black">
+    <nav class="bg-white py-2 px-6 flex justify-between items-center sticky">
+      <a class="text-4xl text-black" href="#">URI</a>
+      <a
+        href="https://github.com/Rakhulsr"
+        target="_blank"
+        class="bg-black text-white px-4 py-2 text-xl flex items-center rounded-xl"
+      >
+        <i class="fab fa-github"></i> GitHub
+      </a>
+    </nav>
+    <div class="border-b-2 border-black"></div>
+
+    <div
+      class="flex flex-col items-center justify-center h-screen items-center py-6"
+    >
+      <div
+        class="bg-[#E3DEF4] text-black w-full max-w-md p-8 rounded-xl border-black border-4"
+      >
+        <h2 class="text-center text-3xl mb-6">Shorten Your URL</h2>
+        <form action="/shorten" method="POST">
+          <div class="mb-4">
+            <input
+              type="url"
+              class="w-full p-4 text-black border-2 border-black rounded-xl focus:outline-none"
+              id="originalUrl"
+              name="originalUrl"
+              required
+              placeholder="Enter URL here"
+            />
+          </div>
+          <button
+            type="submit"
+            class="bg-black text-white w-full py-4 uppercase border-2 border-black rounded-xl"
+          >
+            Submit
+          </button>
+        </form>
+
+        {{if .ShortUrl}}
+        <div
+          class="mt-3 p-4 bg-white text-black border-black border-4 rounded-lg"
+        >
+          <p class="text-center text-lg font-bold">Shortened URL:</p>
+          <div class="flex justify-between items-center mt-4">
+            <span id="shortUrl" class="text-xl break-all">{{.ShortUrl}}</span>
+            <button
+              class="bg-black text-white px-3 py-1 border-2 border-black rounded-lg"
+              onclick="copyToClipboard()"
+            >
+              Copy
+            </button>
+          </div>
+          <a
+            href="{{.ShortUrl}}"
+            target="_blank"
+            class="block text-center bg-black text-white mt-2 p-2 border-2 border-black rounded-xl"
+          >
+            Visit Short URL
+          </a>
+        </div>
+        {{end}}
+      </div>
+    </div>
+  </body>
+</html>
