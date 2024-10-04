@@ -33,6 +33,7 @@ func (h *URLHandlerImpl) ShowForm(c *fiber.Ctx) error {
 func (h *URLHandlerImpl) SaveUrlHandler(c *fiber.Ctx) error {
 	var reqBody web.ReqBody
 
+
 	if err := c.BodyParser(&reqBody); err != nil {
 		return c.Status(fiber.StatusBadRequest).JSON(web.WebResponse{
 			Code:    fiber.ErrBadRequest.Code,
@@ -42,16 +43,25 @@ func (h *URLHandlerImpl) SaveUrlHandler(c *fiber.Ctx) error {
 		})
 	}
 
-	shortUrl := h.storageService.SaveUrlMap(reqBody.OriginalUrl, reqBody.UserId)
-	baseURL := os.Getenv("BASE_URL")
 
+	shortUrl := h.storageService.SaveUrlMap(reqBody.OriginalUrl, reqBody.UserId)
+
+	
+	baseURL := os.Getenv("RAILWAY_STATIC_URL")
+	if baseURL == "" {
+		baseURL = os.Getenv("BASE_URL")
+	}
+
+	
 	baseURL = strings.Trim(baseURL, "\"")
 	resURL := baseURL + "/" + shortUrl
+
 
 	responseData := web.ResponseData{
 		OriginalUrl: reqBody.OriginalUrl,
 		ShortUrl:    resURL,
 	}
+
 
 	c.Status(fiber.StatusOK).JSON(web.WebResponse{
 		Code:    fiber.StatusOK,
@@ -60,6 +70,7 @@ func (h *URLHandlerImpl) SaveUrlHandler(c *fiber.Ctx) error {
 		Data:    responseData,
 	})
 
+]
 	return c.Redirect("/?shortUrl="+resURL, fiber.StatusSeeOther)
 }
 
